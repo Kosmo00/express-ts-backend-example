@@ -1,0 +1,179 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "description": "${projectDescription}",
+        "version": "${projectVersion}",
+        "title": "${projectName} API"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/api/v1"
+        }
+    ],
+    "paths": {
+        "/health": {
+            "get": {
+                "summary": "Returns 'Ok' if server has a good state",
+                "description": "Endpoint for server health state",
+                "responses": {
+                    "200": {
+                        "description": "returns Ok if server is up",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/languages": {
+            "get": {
+                "summary": "Returns a list of languages",
+                "description": "Endpoint for get a list of languages",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/Limit"
+                    },
+                    {
+                        "$ref": "#/components/parameters/Offset"
+                    },
+                    {
+                        "$ref": "#/components/parameters/Order"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "returns the list of required languages",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Language"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "returns an error message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InternalServerErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new language",
+                "requestBody": {
+                    "description": "Add a new language",
+                    "required": true,
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "type": "object",
+                                "required": "name",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Returns the created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Language"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "returns an error message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InternalServerErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "parameters": {
+            "Limit": {
+                "in": "query",
+                "name": "limit",
+                "schema": {
+                    "type": "integer"
+                },
+                "description": "The number of items to return"
+            },
+            "Offset": {
+                "in": "query",
+                "name": "offset",
+                "schema": {
+                    "type": "integer"
+                },
+                "description": "The number of items to skip before starting to collect the result set"
+            },
+            "Order": {
+                "in": "query",
+                "name": "order",
+                "schema": {
+                    "type": "string"
+                },
+                "description": "Sort the query elements."
+            }
+        },
+        "schemas": {
+            "Language": {
+                "type": "object",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "readOnly": true
+                    },
+                    "name": {
+                        "type": "string",
+                        "readOnly": true
+                    }
+                }
+            },
+            "InternalServerErrorMessage": {
+                "type": "object",
+                "required": [
+                    "message"
+                ],
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "required": true
+                    }
+                }
+            }
+        }
+    }
+}
