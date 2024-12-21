@@ -6,6 +6,7 @@ import { Environment } from "./constrains/environment";
 import swaggerUI from "swagger-ui-express";
 import swaggerJson from './config/swagger.json'
 import bodyParser = require("body-parser");
+import logger from "./services/logging/logger";
 import "reflect-metadata";
 
 
@@ -30,5 +31,5 @@ if(process.env.ENVIRONMENT === Environment.DEVELOPMENT){
 }
 
 app.listen(port, () => {
-    console.log(`[server]: Server is running at http://localhost:${port}`);
+    logger.info(`Server is running at port ${port}`, {status: "Ok"});
 });

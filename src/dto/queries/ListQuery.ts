@@ -1,6 +1,7 @@
 import { Expose, Transform, Type } from "class-transformer";
 import "reflect-metadata";
 import { Order } from "sequelize";
+import logger from "../../services/logging/logger";
 
 export class ListQuery {
     @Expose()
@@ -27,11 +28,11 @@ export class ListQuery {
                 } else if (this.order[0] == '-'){
                     return [[sortModel, 'DESC']]
                 } else {
-                    console.log('Bad Order');
+                    logger.warning('Bad Order in List Query.');
                 }
             }
         }catch(err){
-            console.log(err);
+            logger.error('Error ocurred parsing order in ListQuery DTO', err);
         }
     }
 }
