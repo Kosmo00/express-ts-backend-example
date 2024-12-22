@@ -9,8 +9,7 @@ const DIALECT : Dialect = process.env.DB_DIALECT as Dialect;
 
 let sequelizeConnection = new Sequelize(DB_DATABASE, DB_USERNAME, DB_PASSWORD, {
     host: DB_HOST,
-    dialect: DIALECT,
-    port: 3306, 
+    dialect: DIALECT
 });
 
 export default sequelizeConnection;
