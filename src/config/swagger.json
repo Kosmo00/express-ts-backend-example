@@ -95,16 +95,23 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Language"
-                                    }
+                                    "$ref": "#/components/schemas/Language"
+                                }
+                            }
+                        }
+                    },
+                    "418": {
+                        "description": "Return validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnprocessableContentErrorMessage"
                                 }
                             }
                         }
                     },
                     "500": {
-                        "description": "returns an error message",
+                        "description": "Returns an error message",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -171,6 +178,42 @@
                     "message": {
                         "type": "string",
                         "required": true
+                    }
+                }
+            },
+            "UnprocessableContentErrorMessage": {
+                "type": "object",
+                "required": [
+                    "message",
+                    "errors"
+                ],
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "errors": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "target",
+                                "failedConstrains"
+                            ],
+                            "properties": {
+                                "target": {
+                                    "type": "string",
+                                    "required": true
+                                },
+                                "failedConstrains": {
+                                    "type": "array",
+                                    "required": true,
+                                    "items": {
+                                        "type": "string" 
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
