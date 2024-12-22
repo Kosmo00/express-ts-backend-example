@@ -110,8 +110,181 @@
                             }
                         }
                     },
+                    "422": {
+                        "description": "returns a list of the failed field validations",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnprocessableContentErrorMessage"
+                                }
+                            }
+                        }
+                    },
                     "500": {
                         "description": "Returns an error message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InternalServerErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/languages/{id}": {
+            "get": {
+                "summary": "Get a languages by id",
+                "description": "Endpoint for get a language by id",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "description": "The id of the searched language"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "returns the required language",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Language"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "returns an 404 error message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFoundErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "returns an error message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InternalServerErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update a language",
+                "description": "Endpoint for update a language by id",
+                "requestBody": {
+                    "description": "New values for language update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "required": "name",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "description": "The id of the language to update"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "returns the updated language",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Language"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "returns a 404 error message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFoundErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "returns a list of the failed field validations",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnprocessableContentErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "returns an error message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InternalServerErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a languages by id",
+                "description": "Endpoint for delete a language by id",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "description": "The id of the language to delete"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "returns nothing if language is deleted"
+                    },
+                    "404": {
+                        "description": "returns an 404 error message",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/NotFoundErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "returns an error message",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -170,6 +343,18 @@
                 }
             },
             "InternalServerErrorMessage": {
+                "type": "object",
+                "required": [
+                    "message"
+                ],
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "required": true
+                    }
+                }
+            },
+            "NotFoundErrorMessage": {
                 "type": "object",
                 "required": [
                     "message"

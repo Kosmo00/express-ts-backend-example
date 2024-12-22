@@ -1,7 +1,7 @@
 import { Expose } from "class-transformer";
 import { IsString, MaxLength, MinLength } from "class-validator"
 
-export class CreateLanguageMessage {
+export class UpdateLanguageMessage {
     @Expose()
     @IsString()
     @MinLength(1, {
